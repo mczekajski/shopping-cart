@@ -14,19 +14,24 @@
       <div class="col-12 border shadow-sm py-3 px-0 px-sm-3 mb-5 bg-white items-card">
         <div class="row">
           <div class="col-4 col-sm-3 col-xl-2 offset-2 offset-sm-4 offset-xl-5">
-            <h3>Product Name</h3>
+            <h3 class="text-muted">Product Name</h3>
           </div>
           <div class="col-3 col-sm-2">
-            <h3>Unit Price</h3>
+            <h3 class="text-muted">Unit Price</h3>
           </div>
           <div class="col-3 col-sm-3">
-            <h3>Qty</h3>
+            <h3 class="text-muted">Qty</h3>
           </div>
         </div>
 
         <hr class="m-2" />
 
         <ng-container *ngIf="this.cartData && this.productsData">
+
+          <div *ngIf="this.cartData.length === 0">
+            You haven't added anything yet.
+          </div>
+
           <div *ngFor="let item of cartData" class="row v-center">
             <div class="col-2 col-sm-1">
               <button class="btn">
@@ -52,7 +57,7 @@
               <div class="btn-group qty-buttons d-flex flex-column-reverse flex-sm-row">
               <button
                 class="btn btn-outline-secondary p-0 qty-buttons__button"
-                [ngClass]="{ disabled: true }"
+                [ngClass]="{ disabled: item.quantity === 0 }"
                 (click)="changeQuantity(-1, item.productId)"
               >
                 -
@@ -62,6 +67,7 @@
               </div>
               <button
                 class="btn btn-outline-secondary p-0 qty-buttons__button"
+                [ngClass]="{ disabled: item.quantity === 9 }"
                 (click)="changeQuantity(+1, item.productId)"
               >
                 +
@@ -93,14 +99,14 @@
 
     <!-- Summary card -->
     <aside class="col-lg-3">
-      <div class="border d-flex align-items-center px-3 py-3 shipping">
+      <div class="border col-12 d-flex align-items-center px-3 py-2 summary-header">
         <h2 class="text-uppercase m-0 font-weight-bold">shipping</h2>
         <span class="ml-auto font-small font-weight-bold">${{ SHIPPING_PRICE.toFixed(2) }}</span>
       </div>
 
 
       <div class="border d-flex flex-column mt-3">
-        <div class="border col-12 d-flex align-items-center px-3 py-3 totals">
+        <div class="border-bottom col-12 d-flex align-items-center px-3 py-2 summary-header">
           <h2 class="text-uppercase m-0 font-weight-bold">cart totals</h2>
         </div>
 
