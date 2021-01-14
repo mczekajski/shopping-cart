@@ -1,0 +1,48 @@
+.items-card {
+    height: auto;
+    h3 {
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .qty-buttons {
+        display: flex;
+        &__button {
+            font-weight: bold;
+            background-color: lightgray;
+            min-width: 30px;
+            height: 30px;
+            &:hover {
+                background-color: black;
+            }
+        }
+        &__number {
+            position: relative;
+            border-top: 2px solid black;
+            border-right: 2px solid lightgray;
+            border-bottom: 2px solid lightgray;
+            border-left: 2px solid black;
+            height: 30px;
+            min-width: 35px;
+            span {
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                margin: auto;
+            }
+        }
+    }
+}
+.summary-card {
+    background-color:red;
+    height: 200px;
+}
+.shipping {
+    background-color: #eee;
+    height: 2rem;
+}
+.totals {
+    background-color: #ddd;
+    height: 2rem;
+}

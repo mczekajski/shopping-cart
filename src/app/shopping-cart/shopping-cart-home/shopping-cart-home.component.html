@@ -1,0 +1,78 @@
+<div class="container p-0">
+  <div class="row w-100 p-0 mx-0 mt-4">
+    <h1 class="h5 text-secondary font-weight-normal my-auto mr-auto">
+      Shopping Cart
+    </h1>
+    <button class="btn btn-dark px-3">Proceed to checkout</button>
+  </div>
+
+  <div class="row mt-4">
+    <!-- Items card -->
+    <main class="col-lg-9">
+      <div class="col-12 border shadow-sm p-3 mb-5 bg-white items-card">
+        <div class="row">
+          <div class="col-2 offset-5">
+            <h3>Product Name</h3>
+          </div>
+          <div class="col-2">
+            <h3>Unit Price</h3>
+          </div>
+          <div class="col-3">
+            <h3>Qty</h3>
+          </div>
+        </div>
+
+        <hr class="m-2" />
+
+        <div class="row v-center">
+          <div class="col-1">
+            <button class="btn">
+              <img src="/assets/images/x-img.png" alt="Delete item" />
+            </button>
+          </div>
+          <div class="col-4">
+            <img src="/assets/images/headphones.png" alt="" class="img-fluid" />
+          </div>
+          <div class="col-2 h-100">
+            <span class="align-middle font-weight-light font-small"
+              >Headphones</span
+            >
+          </div>
+          <div class="col-2 font-small">11.90</div>
+          <div class="col-2 btn-group qty-buttons">
+            <button class="btn btn-outline-secondary p-0 qty-buttons__button">-</button>
+            <div class="qty-buttons__number">
+              <span class="font-small">2</span>
+            </div>
+            <button class="btn btn-outline-secondary p-0 qty-buttons__button">+</button>
+            <button class="btn p-0">
+              <img
+                src="/assets/images/edit-img.png"
+                alt="Update Shopping Cart"
+              />
+            </button>
+          </div>
+        </div>
+
+        <hr class="m-2" />
+        <div class="row py-2">
+          <div class="col-12">
+            <button class="btn btn-dark px-3 mt-2 mb-4 mr-4 float-right">
+              Update Shopping Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Summary card -->
+    <aside class="col-lg-3">
+      <div class="shipping">
+        <h2 class="text-uppercase font-small">shipping</h2>
+      </div>
+      <div class="totals mt-3">
+        <h2 class="text-uppercase font-small">cart totals</h2>
+      </div>
+    </aside>
+  </div>
+</div>

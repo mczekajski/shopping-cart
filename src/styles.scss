@@ -1,1 +1,17 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn {
+    border-radius: 0;
+}
+.v-center {
+    display: flex;
+    align-items: center;
+}
+.font-small {
+    font-size: 14px;
+}
