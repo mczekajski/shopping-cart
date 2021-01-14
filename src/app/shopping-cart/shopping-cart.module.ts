@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ShoppingCartRoutingModule } from './shopping-cart-routing.module';
 import { ShoppingCartHomeComponent } from './shopping-cart-home/shopping-cart-home.component';
 
-
 @NgModule({
   declarations: [ShoppingCartHomeComponent],
   imports: [

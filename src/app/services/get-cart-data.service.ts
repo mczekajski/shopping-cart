@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-interface CartItem {
+export interface CartItem {
     "productId": number,
     "quantity": number
 }

@@ -1,63 +1,89 @@
-<div class="container p-0">
-  <div class="row w-100 p-0 mx-0 mt-4">
-    <h1 class="h5 text-secondary font-weight-normal my-auto mr-auto">
+<div class="container p-sm-0">
+  <div class="d-flex flex-column flex-sm-row w-100 p-0 mx-0 mt-4">
+    <h1 class="h5 text-secondary font-weight-normal my-auto mr-auto pb-3 p-sm-0">
       Shopping Cart
     </h1>
-    <button class="btn btn-dark px-3">Proceed to checkout</button>
+    <button class="btn btn-dark px-3" (click)="consoleLogData()">
+      Proceed to checkout
+    </button>
   </div>
 
   <div class="row mt-4">
     <!-- Items card -->
     <main class="col-lg-9">
-      <div class="col-12 border shadow-sm p-3 mb-5 bg-white items-card">
+      <div class="col-12 border shadow-sm py-3 px-0 px-sm-3 mb-5 bg-white items-card">
         <div class="row">
-          <div class="col-3 col-xl-2 offset-4 offset-xl-5">
+          <div class="col-4 col-sm-3 col-xl-2 offset-2 offset-sm-4 offset-xl-5">
             <h3>Product Name</h3>
           </div>
-          <div class="col-2">
+          <div class="col-3 col-sm-2">
             <h3>Unit Price</h3>
           </div>
-          <div class="col-3">
+          <div class="col-3 col-sm-3">
             <h3>Qty</h3>
           </div>
         </div>
 
         <hr class="m-2" />
 
-        <div class="row v-center">
-          <div class="col-1">
-            <button class="btn">
-              <img src="/assets/images/x-img.png" alt="Delete item" />
-            </button>
-          </div>
-          <div class="col-3 col-xl-4">
-            <img src="/assets/images/headphones.png" alt="" class="img-fluid" />
-          </div>
-          <div class="col-3 col-xl-2 h-100">
-            <span class="align-middle font-weight-light font-small"
-              >Headphones</span
-            >
-          </div>
-          <div class="col-2 font-small">11.90</div>
-          <div class="col-2 btn-group qty-buttons">
-            <button class="btn btn-outline-secondary p-0 qty-buttons__button">-</button>
-            <div class="qty-buttons__number">
-              <span class="font-small">2</span>
+        <ng-container *ngIf="this.cartData && this.productsData">
+          <div *ngFor="let item of cartData" class="row v-center">
+            <div class="col-2 col-sm-1">
+              <button class="btn">
+                <img src="/assets/images/x-img.png" alt="Delete item" />
+              </button>
             </div>
-            <button class="btn btn-outline-secondary p-0 qty-buttons__button">+</button>
-            <button class="btn p-0">
+            <div class="d-none d-sm-flex col-3 col-xl-4 align-items-center justify-content-center">
               <img
-                src="/assets/images/edit-img.png"
-                alt="Update Shopping Cart"
+                [src]="'/assets/images/' + getProduct(item.productId).image"
+                [alt]="getProduct(item.productId).name"
+                class="img-fluid"
               />
-            </button>
+            </div>
+            <div class="col-4 col-sm-3 col-xl-2 h-100">
+              <span class="align-middle font-weight-light font-small">{{
+                getProduct(item.productId).name
+              }}</span>
+            </div>
+            <div class="col-3 col-sm-2 font-small">
+              ${{ getProduct(item.productId).price.toFixed(2) }}
+            </div>
+            <div class="col-3 col-sm-2 d-flex flex-row">
+              <div class="btn-group qty-buttons d-flex flex-column-reverse flex-sm-row">
+              <button
+                class="btn btn-outline-secondary p-0 qty-buttons__button"
+                [ngClass]="{ disabled: true }"
+                (click)="changeQuantity(-1, item.productId)"
+              >
+                -
+              </button>
+              <div class="qty-buttons__number">
+                <span class="font-small">{{ item.quantity }}</span>
+              </div>
+              <button
+                class="btn btn-outline-secondary p-0 qty-buttons__button"
+                (click)="changeQuantity(+1, item.productId)"
+              >
+                +
+              </button>
+            </div>
+
+              <button class="d-none d-md-flex btn p-0">
+                <img
+                  src="/assets/images/edit-img.png"
+                  alt="Update Shopping Cart"
+                />
+              </button>
+
+            </div>
+            
           </div>
-        </div>
+        </ng-container>
 
         <hr class="m-2" />
         <div class="row py-2">
-          <div class="col-12">
-            <button class="btn btn-dark px-3 mt-2 mb-4 mr-4 float-right">
+          <div class="col-12 d-flex justify-content-center justify-content-sm-end">
+            <button class="btn btn-dark px-3 mt-2 mb-4 mr-sm-4">
               Update Shopping Cart
             </button>
           </div>
@@ -67,11 +93,34 @@
 
     <!-- Summary card -->
     <aside class="col-lg-3">
-      <div class="shipping">
-        <h2 class="text-uppercase font-small">shipping</h2>
+      <div class="border d-flex align-items-center px-3 py-3 shipping">
+        <h2 class="text-uppercase m-0 font-weight-bold">shipping</h2>
+        <span class="ml-auto font-small font-weight-bold">${{ SHIPPING_PRICE.toFixed(2) }}</span>
       </div>
-      <div class="totals mt-3">
-        <h2 class="text-uppercase font-small">cart totals</h2>
+
+
+      <div class="border d-flex flex-column mt-3">
+        <div class="border col-12 d-flex align-items-center px-3 py-3 totals">
+          <h2 class="text-uppercase m-0 font-weight-bold">cart totals</h2>
+        </div>
+
+        <div class="col-12">
+          <div class="d-flex align-items-center mt-4">
+            <h3 class="font-small font-weight-bold pl-1 text-secondary m-0">
+              Subtotal
+            </h3>
+            <span class="ml-auto font-small font-weight-bold">$23.80</span>
+          </div>
+          <hr class="m-2" />
+          <div class="d-flex align-items-center">
+            <h3 class="font-small font-weight-bold pl-1 text-secondary m-0">
+              Grand Total
+            </h3>
+            <span class="ml-auto font-weight-bold">$23.80</span>
+          </div>
+
+          <button class="btn btn-dark px-3 my-4 w-100">Proceed to checkout</button>
+        </div>
       </div>
     </aside>
   </div>

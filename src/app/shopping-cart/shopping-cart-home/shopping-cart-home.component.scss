@@ -1,3 +1,11 @@
+aside {
+    h2 {
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        font-weight: bold;
+    }
+}
+
 .items-card {
     height: auto;
     h3 {
@@ -5,7 +13,6 @@
         font-weight: bold;
     }
     .qty-buttons {
-        display: flex;
         &__button {
             font-weight: bold;
             background-color: lightgray;
@@ -43,6 +50,6 @@
     height: 2rem;
 }
 .totals {
-    background-color: #ddd;
+    background-color: #eee;
     height: 2rem;
 }
