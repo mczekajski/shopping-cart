@@ -22,6 +22,8 @@ export class ShoppingCartHomeComponent implements OnInit {
     private getCartDataService: GetCartDataService,
     private getProductsDataService: GetProductsDataService
   ) {
+    this.getCartData();
+    this.getProductsData();
     this.SHIPPING_PRICE = 23.8;
     this.shipping = this.SHIPPING_PRICE;
     this.proceeded = false;
@@ -30,8 +32,6 @@ export class ShoppingCartHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCartData();
-    this.getProductsData();
   }
 
   getCartData() {

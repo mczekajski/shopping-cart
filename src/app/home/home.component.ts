@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GetCartDataService } from 'src/app/services/get-cart-data.service';
 
 @Component({
   selector: 'app-home',
@@ -6,11 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  itemsInCart = 0;
 
-  constructor() { 
+  constructor(private getCartDataService: GetCartDataService) { 
    }
 
   ngOnInit(): void {
+    this.getCartItemsNumber();
+  }
 
+  getCartItemsNumber() {
+    this.itemsInCart = 0;
+    this.getCartDataService.getCartData().subscribe((data) => data.forEach(item => this.itemsInCart += item.quantity));
+    return this.itemsInCart;
   }
 }
