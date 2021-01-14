@@ -59,7 +59,7 @@ export class ShoppingCartHomeComponent implements OnInit {
   changeQuantity(value: number, id: number) {
     const item = this.getCartItem(id);
     let newValue = item.quantity + value;
-    if (newValue >= 0 && newValue < 10) {
+    if (newValue > 0 && newValue < 10) {
       item.quantity = newValue;
     }
   }
