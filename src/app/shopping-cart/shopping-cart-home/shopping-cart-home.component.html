@@ -1,9 +1,11 @@
 <div class="container p-sm-0">
   <div class="d-flex flex-column flex-sm-row w-100 p-0 mx-0 mt-4">
-    <h1 class="h5 text-secondary font-weight-normal my-auto mr-auto pb-3 p-sm-0">
+    <h1
+      class="h5 text-secondary font-weight-normal my-auto mr-auto pb-3 p-sm-0"
+    >
       Shopping Cart
     </h1>
-    <button class="btn btn-dark px-3" (click)="consoleLogData()">
+    <button class="btn btn-dark px-3" (click)="proceedToCheckout()">
       Proceed to checkout
     </button>
   </div>
@@ -11,34 +13,52 @@
   <div class="row mt-4">
     <!-- Items card -->
     <main class="col-lg-9">
-      <div class="col-12 border shadow-sm py-3 px-0 px-sm-3 mb-5 bg-white items-card">
-        <div class="row">
-          <div class="col-4 col-sm-3 col-xl-2 offset-2 offset-sm-4 offset-xl-5">
-            <h3 class="text-muted">Product Name</h3>
-          </div>
-          <div class="col-3 col-sm-2">
-            <h3 class="text-muted">Unit Price</h3>
-          </div>
-          <div class="col-3 col-sm-3">
-            <h3 class="text-muted">Qty</h3>
-          </div>
+      <div
+        class="col-12 border shadow-sm py-3 px-0 px-sm-3 mb-5 bg-white items-card"
+      >
+
+      <ng-container *ngIf="this.cartData">
+        <div *ngIf="this.proceeded" class="m-4">
+          <p class="text-success">
+            Your order has been submitted successfully!
+          </p>
         </div>
 
-        <hr class="m-2" />
-
-        <ng-container *ngIf="this.cartData && this.productsData">
-
-          <div *ngIf="this.cartData.length === 0">
-            You haven't added anything yet.
+          <div
+            *ngIf="this.cartData.length === 0 && !this.proceeded"
+            class="m-4"
+          >
+            <p>You haven't added anything to your cart yet.</p>
+          </div>
+      
+        <ng-container
+          *ngIf="this.cartData.length && this.productsData && !this.proceeded"
+        >
+          <div class="row">
+            <div
+              class="col-4 col-sm-3 col-xl-2 offset-2 offset-sm-4 offset-xl-5"
+            >
+              <h3 class="text-muted">Product Name</h3>
+            </div>
+            <div class="col-3 col-sm-2">
+              <h3 class="text-muted">Unit Price</h3>
+            </div>
+            <div class="col-3 col-sm-3">
+              <h3 class="text-muted">Qty</h3>
+            </div>
           </div>
 
-          <div *ngFor="let item of cartData" class="row v-center">
+          <hr class="m-2" />
+
+          <div *ngFor="let item of cartData" class="row v-center m-4">
             <div class="col-2 col-sm-1">
-              <button class="btn">
+              <button class="btn" (click)="deleteItem(item)">
                 <img src="/assets/images/x-img.png" alt="Delete item" />
               </button>
             </div>
-            <div class="d-none d-sm-flex col-3 col-xl-4 align-items-center justify-content-center">
+            <div
+              class="d-none d-sm-flex col-3 col-xl-4 align-items-center justify-content-center"
+            >
               <img
                 [src]="'/assets/images/' + getProduct(item.productId).image"
                 [alt]="getProduct(item.productId).name"
@@ -54,59 +74,67 @@
               ${{ getProduct(item.productId).price.toFixed(2) }}
             </div>
             <div class="col-3 col-sm-2 d-flex flex-row">
-              <div class="btn-group qty-buttons d-flex flex-column-reverse flex-sm-row">
-              <button
-                class="btn btn-outline-secondary p-0 qty-buttons__button"
-                [ngClass]="{ disabled: item.quantity === 0 }"
-                (click)="changeQuantity(-1, item.productId)"
+              <div
+                class="btn-group qty-buttons d-flex flex-column-reverse flex-sm-row"
               >
-                -
-              </button>
-              <div class="qty-buttons__number">
-                <span class="font-small">{{ item.quantity }}</span>
+                <button
+                  class="btn btn-outline-secondary p-0 qty-buttons__button"
+                  [ngClass]="{ disabled: item.quantity === 0 }"
+                  (click)="changeQuantity(-1, item.productId)"
+                >
+                  -
+                </button>
+                <div class="qty-buttons__number">
+                  <span class="font-small">{{ item.quantity }}</span>
+                </div>
+                <button
+                  class="btn btn-outline-secondary p-0 qty-buttons__button"
+                  [ngClass]="{ disabled: item.quantity === 9 }"
+                  (click)="changeQuantity(+1, item.productId)"
+                >
+                  +
+                </button>
               </div>
-              <button
-                class="btn btn-outline-secondary p-0 qty-buttons__button"
-                [ngClass]="{ disabled: item.quantity === 9 }"
-                (click)="changeQuantity(+1, item.productId)"
-              >
-                +
-              </button>
-            </div>
 
-              <button class="d-none d-md-flex btn p-0">
+              <button class="d-none d-md-flex btn p-0" (click)="updateCart()">
                 <img
                   src="/assets/images/edit-img.png"
                   alt="Update Shopping Cart"
                 />
               </button>
-
             </div>
-            
+          </div>
+
+          <hr class="m-2" />
+          <div class="row py-2">
+            <div
+              class="col-12 d-flex justify-content-center justify-content-sm-end"
+            >
+              <button class="btn btn-dark px-3 mt-2 mb-4 mr-sm-4" (click)="updateCart()">
+                Update Shopping Cart
+              </button>
+            </div>
           </div>
         </ng-container>
-
-        <hr class="m-2" />
-        <div class="row py-2">
-          <div class="col-12 d-flex justify-content-center justify-content-sm-end">
-            <button class="btn btn-dark px-3 mt-2 mb-4 mr-sm-4">
-              Update Shopping Cart
-            </button>
-          </div>
-        </div>
+      </ng-container>
       </div>
     </main>
 
     <!-- Summary card -->
     <aside class="col-lg-3">
-      <div class="border col-12 d-flex align-items-center px-3 py-2 summary-header">
+      <div
+        class="border col-12 d-flex align-items-center px-3 py-2 summary-header"
+      >
         <h2 class="text-uppercase m-0 font-weight-bold">shipping</h2>
-        <span class="ml-auto font-small font-weight-bold">${{ SHIPPING_PRICE.toFixed(2) }}</span>
+        <span class="ml-auto font-small font-weight-bold"
+          >${{ shipping.toFixed(2) }}</span
+        >
       </div>
 
-
       <div class="border d-flex flex-column mt-3">
-        <div class="border-bottom col-12 d-flex align-items-center px-3 py-2 summary-header">
+        <div
+          class="border-bottom col-12 d-flex align-items-center px-3 py-2 summary-header"
+        >
           <h2 class="text-uppercase m-0 font-weight-bold">cart totals</h2>
         </div>
 
@@ -115,17 +143,22 @@
             <h3 class="font-small font-weight-bold pl-1 text-secondary m-0">
               Subtotal
             </h3>
-            <span class="ml-auto font-small font-weight-bold">$23.80</span>
+            <span class="ml-auto font-small font-weight-bold">${{ subtotal.toFixed(2) }}</span>
           </div>
           <hr class="m-2" />
           <div class="d-flex align-items-center">
             <h3 class="font-small font-weight-bold pl-1 text-secondary m-0">
               Grand Total
             </h3>
-            <span class="ml-auto font-weight-bold">$23.80</span>
+            <span class="ml-auto font-weight-bold">${{ grandtotal.toFixed(2) }}</span>
           </div>
 
-          <button class="btn btn-dark px-3 my-4 w-100">Proceed to checkout</button>
+          <button
+            class="btn btn-dark px-3 my-4 w-100"
+            (click)="proceedToCheckout()"
+          >
+            Proceed to checkout
+          </button>
         </div>
       </div>
     </aside>

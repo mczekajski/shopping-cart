@@ -13,12 +13,20 @@ export class ShoppingCartHomeComponent implements OnInit {
   cartData: Array<CartItem>;
   productsData: Array<Product>;
   SHIPPING_PRICE: number;
+  shipping: number;
+  subtotal: number;
+  grandtotal: number;
+  proceeded: boolean;
 
   constructor(
     private getCartDataService: GetCartDataService,
     private getProductsDataService: GetProductsDataService
   ) {
     this.SHIPPING_PRICE = 23.8;
+    this.shipping = this.SHIPPING_PRICE;
+    this.proceeded = false;
+    this.subtotal = 0;
+    this.grandtotal = this.subtotal + this.shipping;
   }
 
   ngOnInit(): void {
@@ -56,7 +64,24 @@ export class ShoppingCartHomeComponent implements OnInit {
     }
   }
 
-  consoleLogData() {
-    console.log(this.cartData.length);
+  deleteItem(item: CartItem) {
+    this.cartData = this.cartData.filter(
+      (cartItem) => cartItem.productId !== item.productId
+    );
+  }
+
+  updateCart() {
+    this.subtotal = 0;
+    this.cartData.forEach(item => this.subtotal += item.quantity * this.getProduct(item.productId).price);
+    this.subtotal >= 100 ? this.shipping = 0 : this.shipping = this.SHIPPING_PRICE;
+    this.grandtotal = this.subtotal + this.shipping;
+  }
+
+  proceedToCheckout() {
+    if (this.cartData.length) {
+      this.proceeded = true;
+    } else {
+      alert("Your cart is empty!");
+    }
   }
 }
